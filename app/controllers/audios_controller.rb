@@ -18,6 +18,12 @@ class AudiosController < ApplicationController
   private
 
   def convert_wav_to_mp3(wav_data)
-    # Здесь нужно добавить код для конвертации WAV в MP3
+    Tempfile.open(['', '.wav']) do |wav_file|
+      wav_file.binmode
+      wav_file.write(wav_data)
+      wav_file.rewind
+      mp3_file_path = convert_wav_to_mp3(wav_file.path)
+      File.read(mp3_file_path)
+    end
   end
 end
